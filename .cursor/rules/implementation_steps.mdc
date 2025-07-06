@@ -1,0 +1,65 @@
+# Weather App Implementation Guide
+# Always ask to confirm before continue to the next step
+
+## ✅ STEP 1: Project Setup & Scaffolding
+**Goal:** Have a basic working React project environment.
+
+### Tasks:
+1. Initialize the project using Create React App.
+2. Install dependencies:
+   - React (if not already included)
+   - Axios or Fetch API
+   - Tailwind CSS (or basic CSS framework)
+3. Set up folder structure with `/components`, `/services`, `/assets` folders.
+4. Create `.env` file and include a dummy value for `VITE_METEOSOURCE_API_KEY`.
+
+## ✅ STEP 2: Static UI - Layout & Components
+**Goal:** Create a fully static (non-functional) layout of the app.
+
+### Tasks:
+1. Create `CitySelector.jsx` with 6 buttons: Borovets, Bansko, Karlovo, Sofia, Plovdiv, Kardzhali.
+2. Create `WeatherCard.jsx` to show (use the attached screenshot):
+   - Current weather section
+   - Hourly forecast placeholder
+   - 7-day forecast placeholder
+3. Assemble layout in `App.jsx` with `CitySelector` on top and `WeatherCard` in the middle.
+
+## ✅ STEP 3: City Selection State Logic
+**Goal:** Handle city selection and manage state centrally.
+
+### Tasks:
+1. Use `useState` in `App.jsx` to store selected city.
+2. Pass selected city to `WeatherCard.jsx` via props.
+3. Highlight selected city button visually in `CitySelector`.
+
+## ✅ STEP 4: Integrate Meteosource API
+**Goal:** Fetch and display real weather data based on selected city.
+
+### Tasks:
+1. Set up `meteosourceAPI.js` with a function `getWeather(city)` that:
+   - Maps city names to Meteosource location parameters
+   - Sends API request using Axios/fetch
+2. On city change, fetch weather data in `App.jsx` or `WeatherCard.jsx`.
+3. Implement error handling + loading state:
+   - Display loading spinner while fetching
+   - Show error if fetch fails
+
+## ✅ STEP 5: Display Weather Data
+**Goal:** Render weather data clearly in the UI.
+
+### Tasks:
+1. Show current weather info (temp, condition, humidity, wind).
+2. Render hourly forecast (next 12 hours) in a horizontal scroll or stacked layout.
+3. Render 7-day forecast (day name, temp, summary icon).
+
+## ✅ STEP 6: Styling & Polish
+**Goal:** Improve UI aesthetics and user experience.
+
+### Tasks:
+1. Add weather icons based on API data.
+2. Make app mobile-friendly (basic responsiveness).
+3. Add subtle animations (e.g., fade, slide) for smoother transitions.
+description:
+globs:
+alwaysApply: false
+---

@@ -1,0 +1,48 @@
+# Weather Application Guide
+
+✅ **Core Functionality**
+- Single Page Application (SPA)
+- The app will consist of one main page with no routing or page navigation.
+
+**Main Weather Display Card**
+- A large, centered card that displays weather information.
+- Should show current conditions, hourly forecast, and 7-day forecast.
+
+**Top Navigation with Predefined Cities**
+- 6 buttons displayed horizontally at the top of the screen.
+- Each button represents a predefined city in Bulgaria: (location IDs)
+  - Borovets
+  - Bansko
+  - Karlovo
+  - Sofia
+  - Plovdiv
+  - Kardzhali
+- When a button is clicked, the main weather card should update to show data for the selected city.
+
+**Weather Data Source**
+- Data is fetched from the Meteosource API (https://www.meteosource.com/documentation).
+- Each city must use its appropriate API parameters (such as location ID, name, or coordinates, depending on API setup).
+
+**Dynamic Weather Display**
+On city selection:
+- Display:
+  - Current weather
+  - Hourly forecast (e.g., next 12–24 hours)
+  - 7-day forecast
+- Weather info should include: temperature, condition/summary, wind speed/direction, humidity, and other relevant data.
+
+🔧 **Tech Stack (recommended/defaults)**
+- Frontend: React with Tailwind CSS (or plain CSS)
+- State Management: `useState`, `useEffect` (or Zustand if needed)
+- Data Fetching: Fetch API or Axios
+- Environment Variables: API keys from Meteosource stored in `.env`
+
+📌 **Design Hints**
+- Use a clean, minimal design.
+- Main weather card centered on the page.
+- Highlight the selected city button visually.
+- Make use of icons or background color changes to represent weather states if desired.
+description:
+globs:
+alwaysApply: true
+---
