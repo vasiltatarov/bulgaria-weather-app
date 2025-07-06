@@ -1,0 +1,187 @@
+# Meteosource API – Current Weather and Forecast
+
+## Location specification
+The location of the weather data is the only parameter that is required and must be specified. There are two ways to do this:
+
+Specify the GPS coordinates of the location using the parameters lat and lon.
+OR specify the name of the place using the parameter place_id. To obtain the place_id for the location you want, please use endpoints /find_places_prefix (search by prefix) or /find_places (search by full name).
+Note: For mountains, it is usually better to specify the place_id rather than the lat and lon. When you use place_id, you are guaranteed to receive forecasts for the precise elevation of the peak. When you specify the coordinates, the elevation can be less precise.
+
+## Example API request
+https://www.meteosource.com/api/v1/free/point?place_id=london&sections=all&timezone=UTC&language=en&units=metric&key=YOUR-API-KEY
+
+## Parameters
+Name	Description
+place_id	
+Identifier of a place. To obtain the place_id for the location you want, please use endpoints /find_places_prefix (search by prefix) or /find_places (search by full name).
+
+lat	
+Latitude in format 12N, 12.3N, 12.3, or 13S, 13.2S, -13.4
+
+lon	
+Longitude in format 12E, 12.3E, 12.3, or 13W, 13.2W, -13.4
+
+sections	
+Sections to be included in the response. You can specify more section by separating the values with a comma. The available values are:
+
+current: Current weather situation
+daily: Forecasts for each whole day, without the daily parts
+daily-parts: Forecasts for each whole day, morning, afternoon and evening
+Important: forecast for the morning, afternoon and evening is available only for the first 7 days in the forecast
+hourly: Forecasts with hourly resolution
+minutely: Precipitation forecast with 1 minute resolution
+alerts: The weather alerts
+all: All sections
+timezone	
+Timezone to be used for the date fields. If not specified, local timezone of the forecast location will be used. The format is according to the tzinfo database, so values like Europe/Prague or UTC can be used. Alternatively you may use the value auto in which case the local timezone of the location is used. The full list of valid timezone strings can be found here.
+
+language	
+The language of text summaries and place names (variable names are never translated). Available languages are:
+
+en: English
+es: Spanish
+fr: French
+de: German
+pl: Polish
+pt: Portuguese
+cs: Czech
+units	
+Unit system to be used. The available values are:
+
+auto: Select the system automatically, based on the forecast location.
+metric: Metric (SI) units (°C, mm/h, m/s, cm, km, hPa).
+us: Imperial units (°F, in/h, mph, in, mi, Hg).
+uk: Same as metric, except that visibility is in miles and wind speeds are in mph.
+ca: Same as metric, except that wind speeds are in km/h and pressure is in kPa.
+
+## Response
+{
+    "lat": "51.50853N",
+    "lon": "0.12574W",
+    "elevation": 25,
+    "timezone": "UTC",
+    "units": "metric",
+    "current": {
+        "icon": "sunny",
+        "icon_num": 2,
+        "summary": "Sunny",
+        "temperature": 17.8,
+        "wind": {
+            "speed": 2.5,
+            "angle": 86,
+            "dir": "E"
+        },
+        "precipitation": {
+            "total": 0,
+            "type": "none"
+        },
+        "cloud_cover": 0
+    },
+    "hourly": {
+        "data": [
+            {
+                "date": "2025-04-29T09:00:00",
+                "weather": "sunny",
+                "icon": 2,
+                "summary": "Sunny",
+                "temperature": 17.8,
+                "wind": {
+                    "speed": 2.5,
+                    "dir": "E",
+                    "angle": 86
+                },
+                "cloud_cover": {
+                    "total": 0
+                },
+                "precipitation": {
+                    "total": 0,
+                    "type": "none"
+                }
+            },
+            {
+                "date": "2025-04-29T10:00:00",
+                "weather": "sunny",
+                "icon": 2,
+                "summary": "Sunny",
+                "temperature": 19.8,
+                "wind": {
+                    "speed": 2.9,
+                    "dir": "E",
+                    "angle": 97
+                },
+                "cloud_cover": {
+                    "total": 0
+                },
+                "precipitation": {
+                    "total": 0,
+                    "type": "none"
+                }
+            }
+        ]
+    },
+    "daily": {
+        "data": [
+            {
+                "day": "2025-04-29",
+                "weather": "sunny",
+                "icon": 2,
+                "summary": "Sunny. Temperature 9/23 °C.",
+                "all_day": {
+                    "weather": "sunny",
+                    "icon": 2,
+                    "temperature": 16,
+                    "temperature_min": 8.5,
+                    "temperature_max": 23,
+                    "wind": {
+                        "speed": 2.6,
+                        "dir": "E",
+                        "angle": 87
+                    },
+                    "cloud_cover": {
+                        "total": 1
+                    },
+                    "precipitation": {
+                        "total": 0,
+                        "type": "none"
+                    }
+                },
+                "morning": null,
+                "afternoon": null,
+                "evening": null
+            },
+            {
+                "day": "2025-04-30",
+                "weather": "mostly_sunny",
+                "icon": 3,
+                "summary": "Sunny. Temperature 9/26 °C.",
+                "all_day": {
+                    "weather": "mostly_sunny",
+                    "icon": 3,
+                    "temperature": 17,
+                    "temperature_min": 8.8,
+                    "temperature_max": 25.5,
+                    "wind": {
+                        "speed": 2.4,
+                        "dir": "E",
+                        "angle": 86
+                    },
+                    "cloud_cover": {
+                        "total": 11
+                    },
+                    "precipitation": {
+                        "total": 0,
+                        "type": "none"
+                    }
+                },
+                "morning": null,
+                "afternoon": null,
+                "evening": null
+            }
+        ]
+    }
+}
+
+description:
+globs:
+alwaysApply: false
+---

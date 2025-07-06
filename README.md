@@ -44,6 +44,20 @@ npm run dev
 
 4. Open your browser and navigate to `http://localhost:5173`
 
+### API Setup
+
+This application uses the Meteosource API for weather data. To use the API:
+
+1. Sign up for a free API key at [Meteosource](https://www.meteosource.com/)
+2. Once you have your API key, open the file `src/utils/constants.ts`
+3. Replace `YOUR-API-KEY` with your actual API key:
+
+```typescript
+export const WEATHER_API_KEY = 'your-actual-api-key-here';
+```
+
+**Note:** For production use, it's recommended to use environment variables to store API keys.
+
 ## Project Structure
 
 ```
