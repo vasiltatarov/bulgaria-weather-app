@@ -93,8 +93,8 @@ export interface WeatherData {
   location: string;
   temperature: number;
   conditions: string;
-  humidity?: number;
-  pressure?: number;
+  cloudCover?: number;
+  precipitation?: number;
   windSpeed?: number;
   time?: string;
   date?: string;

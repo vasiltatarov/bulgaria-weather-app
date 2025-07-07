@@ -35,8 +35,8 @@ export const fetchWeatherData = async (location: Location): Promise<{
       temperature: data.current.temperature,
       conditions: data.current.summary,
       windSpeed: data.current.wind.speed,
-      humidity: 0, // Not directly provided in the API, would need another source
-      pressure: 0, // Not directly provided in the API, would need another source
+      cloudCover: data.current.cloud_cover, // Using cloud_cover instead of humidity
+      precipitation: data.current.precipitation.total, // Using precipitation instead of pressure
     };
     
     // Process hourly forecast data (next 6 hours)
@@ -54,7 +54,9 @@ export const fetchWeatherData = async (location: Location): Promise<{
           temperature: hour.temperature,
           conditions: hour.summary,
           time: date.getHours().toString().padStart(2, '0'),
-          windSpeed: hour.wind.speed
+          windSpeed: hour.wind.speed,
+          cloudCover: hour.cloud_cover.total,
+          precipitation: hour.precipitation.total
         });
       });
     }
@@ -81,18 +83,18 @@ export const getMockWeatherData = (locationName: string) => {
     location: locationName,
     temperature: 28,
     conditions: 'Sunny',
-    humidity: 45,
-    pressure: 1013,
+    cloudCover: 0, // Updated from humidity
+    precipitation: 0, // Updated from pressure
     windSpeed: 3
   };
   
   const forecast: WeatherData[] = [
-    { location: locationName, temperature: 28, conditions: 'Sunny', time: '14' },
-    { location: locationName, temperature: 29, conditions: 'Sunny', time: '15' },
-    { location: locationName, temperature: 30, conditions: 'Partly Cloudy', time: '16' },
-    { location: locationName, temperature: 29, conditions: 'Partly Cloudy', time: '17' },
-    { location: locationName, temperature: 27, conditions: 'Partly Cloudy', time: '18' },
-    { location: locationName, temperature: 25, conditions: 'Clear', time: '19' }
+    { location: locationName, temperature: 28, conditions: 'Sunny', time: '14', cloudCover: 0, precipitation: 0 },
+    { location: locationName, temperature: 29, conditions: 'Sunny', time: '15', cloudCover: 0, precipitation: 0 },
+    { location: locationName, temperature: 30, conditions: 'Partly Cloudy', time: '16', cloudCover: 30, precipitation: 0 },
+    { location: locationName, temperature: 29, conditions: 'Partly Cloudy', time: '17', cloudCover: 40, precipitation: 0 },
+    { location: locationName, temperature: 27, conditions: 'Partly Cloudy', time: '18', cloudCover: 35, precipitation: 0 },
+    { location: locationName, temperature: 25, conditions: 'Clear', time: '19', cloudCover: 10, precipitation: 0 }
   ];
   
   return { currentWeather, forecast };

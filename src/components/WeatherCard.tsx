@@ -72,12 +72,12 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ currentWeather, forecast }) =
 
       <div className="weather-details">
         <div className="detail-item">
-          <span className="detail-label">Влажност:</span>
-          <span className="detail-value">{currentWeather.humidity || '24'}%</span>
+          <span className="detail-label">Облачност:</span>
+          <span className="detail-value">{currentWeather.cloudCover || '0'}%</span>
         </div>
         <div className="detail-item">
-          <span className="detail-label">Налягане:</span>
-          <span className="detail-value">{currentWeather.pressure || '1012'} hPa</span>
+          <span className="detail-label">Валежи:</span>
+          <span className="detail-value">{currentWeather.precipitation || '0'} мм</span>
         </div>
         <div className="detail-item">
           <span className="detail-label">Вятър:</span>
