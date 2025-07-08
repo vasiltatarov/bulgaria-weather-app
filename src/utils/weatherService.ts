@@ -40,12 +40,12 @@ export const fetchWeatherData = async (location: Location): Promise<{
       precipitation: data.current.precipitation.total, // Using precipitation instead of pressure
     };
     
-    // Process hourly forecast data (next 6 hours)
+    // Process hourly forecast data (next 12 hours)
     const forecast: WeatherData[] = [];
     
     if (data.hourly && data.hourly.data.length > 0) {
-      // Take only the next 6 hours
-      const hourlyData = data.hourly.data.slice(0, 6);
+      // Take only the next 12 hours
+      const hourlyData = data.hourly.data.slice(0, 12);
       
       hourlyData.forEach(hour => {
         const date = new Date(hour.date);
@@ -121,7 +121,13 @@ export const getMockWeatherData = (locationName: string) => {
     { location: locationName, temperature: 30, conditions: 'Partly Cloudy', time: '16', cloudCover: 30, precipitation: 0 },
     { location: locationName, temperature: 29, conditions: 'Partly Cloudy', time: '17', cloudCover: 40, precipitation: 0 },
     { location: locationName, temperature: 27, conditions: 'Partly Cloudy', time: '18', cloudCover: 35, precipitation: 0 },
-    { location: locationName, temperature: 25, conditions: 'Clear', time: '19', cloudCover: 10, precipitation: 0 }
+    { location: locationName, temperature: 25, conditions: 'Clear', time: '19', cloudCover: 10, precipitation: 0 },
+    { location: locationName, temperature: 23, conditions: 'Clear', time: '20', cloudCover: 5, precipitation: 0 },
+    { location: locationName, temperature: 21, conditions: 'Clear', time: '21', cloudCover: 0, precipitation: 0 },
+    { location: locationName, temperature: 20, conditions: 'Clear', time: '22', cloudCover: 0, precipitation: 0 },
+    { location: locationName, temperature: 19, conditions: 'Clear', time: '23', cloudCover: 0, precipitation: 0 },
+    { location: locationName, temperature: 18, conditions: 'Clear', time: '00', cloudCover: 0, precipitation: 0 },
+    { location: locationName, temperature: 17, conditions: 'Clear', time: '01', cloudCover: 0, precipitation: 0 }
   ];
   
   const dailyForecast: WeatherData[] = [
