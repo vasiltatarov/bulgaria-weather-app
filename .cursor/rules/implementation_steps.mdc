@@ -48,7 +48,7 @@
 **Goal:** Render weather data clearly in the UI.
 
 ### Tasks:
-1. Show current weather info (temp, condition, humidity, wind).
+1. Show current weather info.
 2. Render hourly forecast (next 12 hours) in a horizontal scroll or stacked layout.
 3. Render 7-day forecast (day name, temp, summary icon).
 
