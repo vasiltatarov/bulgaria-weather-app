@@ -48,5 +48,7 @@ export const REGIONS = [
   'Smolyan',
   'Targovishte',
   'Haskovo',
-  'Yambol'
+  'Borovets',
+  'Bansko',
+  'Karlovo'
 ]; 
