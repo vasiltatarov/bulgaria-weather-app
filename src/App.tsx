@@ -11,16 +11,18 @@ function App() {
   const [weatherData, setWeatherData] = useState<{
     currentWeather: WeatherData;
     forecast: WeatherData[];
+    dailyForecast: WeatherData[];
   }>({
     currentWeather: {
       location: 'София',
       temperature: 28,
       conditions: 'Слънчево',
-      humidity: 45,
-      pressure: 1013,
+      cloudCover: 0,
+      precipitation: 0,
       windSpeed: 3
     },
-    forecast: []
+    forecast: [],
+    dailyForecast: []
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -75,6 +77,7 @@ function App() {
         <WeatherCard 
           currentWeather={weatherData.currentWeather}
           forecast={weatherData.forecast}
+          dailyForecast={weatherData.dailyForecast}
         />
       )}
     </Layout>

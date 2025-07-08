@@ -92,6 +92,8 @@ export interface DailyForecast {
 export interface WeatherData {
   location: string;
   temperature: number;
+  temperatureMin?: number;
+  temperatureMax?: number;
   conditions: string;
   cloudCover?: number;
   precipitation?: number;

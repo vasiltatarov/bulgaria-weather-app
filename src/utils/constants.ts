@@ -22,7 +22,6 @@ export const MAJOR_CITIES = [
 
 // Regions in Bulgaria
 export const REGIONS = [
-  'Sofia-Capital',
   'Plovdiv',
   'Varna',
   'Burgas',

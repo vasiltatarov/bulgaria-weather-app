@@ -9,12 +9,13 @@ import type { Location, WeatherApiResponse, WeatherData } from '../types';
 export const fetchWeatherData = async (location: Location): Promise<{
   currentWeather: WeatherData;
   forecast: WeatherData[];
+  dailyForecast: WeatherData[];
 }> => {
   try {
     // Build API URL with query parameters
     const params = new URLSearchParams({
       place_id: location.name.toLowerCase(),
-      sections: 'current,hourly',
+      sections: 'current,hourly,daily',
       timezone: 'auto',
       language: 'en',
       units: 'metric',
@@ -61,9 +62,35 @@ export const fetchWeatherData = async (location: Location): Promise<{
       });
     }
     
+    // Process daily forecast data (7 days)
+    const dailyForecast: WeatherData[] = [];
+    
+    if (data.daily && data.daily.data.length > 0) {
+      // Take up to 7 days
+      const dailyData = data.daily.data.slice(0, 7);
+      
+      dailyData.forEach(day => {
+        const date = new Date(day.day);
+        const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+        
+        dailyForecast.push({
+          location: location.name,
+          temperature: day.all_day.temperature,
+          temperatureMin: day.all_day.temperature_min,
+          temperatureMax: day.all_day.temperature_max,
+          conditions: day.summary,
+          date: dayName,
+          cloudCover: day.all_day.cloud_cover.total,
+          precipitation: day.all_day.precipitation.total,
+          windSpeed: day.all_day.wind.speed
+        });
+      });
+    }
+    
     return {
       currentWeather,
-      forecast
+      forecast,
+      dailyForecast
     };
   } catch (error) {
     console.error('Error fetching weather data:', error);
@@ -97,5 +124,15 @@ export const getMockWeatherData = (locationName: string) => {
     { location: locationName, temperature: 25, conditions: 'Clear', time: '19', cloudCover: 10, precipitation: 0 }
   ];
   
-  return { currentWeather, forecast };
+  const dailyForecast: WeatherData[] = [
+    { location: locationName, temperature: 28, temperatureMin: 22, temperatureMax: 30, conditions: 'Sunny', date: 'Mon', cloudCover: 0, precipitation: 0 },
+    { location: locationName, temperature: 27, temperatureMin: 21, temperatureMax: 29, conditions: 'Sunny', date: 'Tue', cloudCover: 10, precipitation: 0 },
+    { location: locationName, temperature: 26, temperatureMin: 20, temperatureMax: 28, conditions: 'Partly Cloudy', date: 'Wed', cloudCover: 30, precipitation: 0 },
+    { location: locationName, temperature: 25, temperatureMin: 19, temperatureMax: 27, conditions: 'Cloudy', date: 'Thu', cloudCover: 60, precipitation: 0 },
+    { location: locationName, temperature: 24, temperatureMin: 18, temperatureMax: 26, conditions: 'Rain', date: 'Fri', cloudCover: 80, precipitation: 5 },
+    { location: locationName, temperature: 23, temperatureMin: 17, temperatureMax: 25, conditions: 'Partly Cloudy', date: 'Sat', cloudCover: 40, precipitation: 0 },
+    { location: locationName, temperature: 25, temperatureMin: 19, temperatureMax: 27, conditions: 'Sunny', date: 'Sun', cloudCover: 10, precipitation: 0 }
+  ];
+  
+  return { currentWeather, forecast, dailyForecast };
 }; 
