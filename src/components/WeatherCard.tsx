@@ -1,5 +1,6 @@
 import React from 'react';
 import type { WeatherData } from '../types';
+import { WEATHER_ICONS, CONDITION_TO_ICON } from '../utils/constants';
 
 interface WeatherCardProps {
   currentWeather: WeatherData;
@@ -7,10 +8,25 @@ interface WeatherCardProps {
   dailyForecast?: WeatherData[];
 }
 
+// Helper function to get the appropriate icon based on weather conditions
+const getWeatherIcon = (conditions: string): string => {
+  const conditionLower = conditions.toLowerCase();
+  
+  // Check if any of the condition keys match the current conditions
+  for (const [key, value] of Object.entries(CONDITION_TO_ICON)) {
+    if (conditionLower.includes(key.toLowerCase())) {
+      return WEATHER_ICONS[value as keyof typeof WEATHER_ICONS];
+    }
+  }
+  
+  // Default icon if no match is found
+  return WEATHER_ICONS.default;
+};
+
 const WeatherCard: React.FC<WeatherCardProps> = ({ currentWeather, forecast, dailyForecast }) => {
   return (
     <>
-      <div className="weather-card">
+      <div className="weather-card fade-in">
         <div className="weather-card-header">
           <h2 className="location-name">{currentWeather.location}</h2>
           <div className="weather-date-time">
@@ -26,17 +42,11 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ currentWeather, forecast, dai
         <div className="current-weather">
           <div className="weather-icon-temp">
             <div className="weather-icon">
-              {/* Weather icon based on conditions */}
-              {currentWeather.conditions.includes('слънч') || currentWeather.conditions.includes('ясно') || 
-               currentWeather.conditions.toLowerCase().includes('sunny') || currentWeather.conditions.toLowerCase().includes('clear') ? (
-                <span className="icon sunny">☀️</span>
-              ) : currentWeather.conditions.includes('облач') || currentWeather.conditions.toLowerCase().includes('cloud') ? (
-                <span className="icon cloudy">⛅</span>
-              ) : currentWeather.conditions.includes('дъжд') || currentWeather.conditions.toLowerCase().includes('rain') ? (
-                <span className="icon rainy">🌧️</span>
-              ) : (
-                <span className="icon">⛅</span>
-              )}
+              <img 
+                src={getWeatherIcon(currentWeather.conditions)} 
+                alt={currentWeather.conditions}
+                className="weather-icon-img"
+              />
             </div>
             <div className="temperature">
               <span className="temp-value">{Math.round(currentWeather.temperature)}</span>
@@ -53,19 +63,14 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ currentWeather, forecast, dai
             <h3>Почасова прогноза</h3>
             <div className="forecast-items">
               {forecast.map((item, index) => (
-                <div key={index} className="forecast-item">
+                <div key={index} className="forecast-item slide-in" style={{ animationDelay: `${index * 0.1}s` }}>
                   <div className="forecast-time">{item.time}</div>
                   <div className="forecast-icon">
-                    {item.conditions.includes('слънч') || item.conditions.includes('ясно') || 
-                     item.conditions.toLowerCase().includes('sunny') || item.conditions.toLowerCase().includes('clear') ? (
-                      <span className="icon small sunny">☀️</span>
-                    ) : item.conditions.includes('облач') || item.conditions.toLowerCase().includes('cloud') ? (
-                      <span className="icon small cloudy">⛅</span>
-                    ) : item.conditions.includes('дъжд') || item.conditions.toLowerCase().includes('rain') ? (
-                      <span className="icon small rainy">🌧️</span>
-                    ) : (
-                      <span className="icon small">⛅</span>
-                    )}
+                    <img 
+                      src={getWeatherIcon(item.conditions)} 
+                      alt={item.conditions}
+                      className="forecast-icon-img"
+                    />
                   </div>
                   <div className="forecast-temp">{Math.round(item.temperature)}°C</div>
                 </div>
@@ -91,25 +96,20 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ currentWeather, forecast, dai
       </div>
 
       {dailyForecast && dailyForecast.length > 0 && (
-        <div className="weather-card weekly-forecast-card">
+        <div className="weather-card weekly-forecast-card fade-in" style={{ animationDelay: '0.3s' }}>
           <div className="weather-card-header">
             <h2 className="section-title">7-дневна прогноза</h2>
           </div>
           <div className="daily-forecast-items">
             {dailyForecast.map((item, index) => (
-              <div key={index} className="daily-forecast-item">
+              <div key={index} className="daily-forecast-item slide-in" style={{ animationDelay: `${0.3 + index * 0.1}s` }}>
                 <div className="forecast-day">{item.date}</div>
                 <div className="forecast-icon">
-                  {item.conditions.includes('слънч') || item.conditions.includes('ясно') || 
-                   item.conditions.toLowerCase().includes('sunny') || item.conditions.toLowerCase().includes('clear') ? (
-                    <span className="icon small sunny">☀️</span>
-                  ) : item.conditions.includes('облач') || item.conditions.toLowerCase().includes('cloud') ? (
-                    <span className="icon small cloudy">⛅</span>
-                  ) : item.conditions.includes('дъжд') || item.conditions.toLowerCase().includes('rain') ? (
-                    <span className="icon small rainy">🌧️</span>
-                  ) : (
-                    <span className="icon small">⛅</span>
-                  )}
+                  <img 
+                    src={getWeatherIcon(item.conditions)} 
+                    alt={item.conditions}
+                    className="forecast-icon-img small"
+                  />
                 </div>
                 <div className="forecast-temp-range">
                   <span className="temp-max">{Math.round(item.temperatureMax || item.temperature)}°</span>
